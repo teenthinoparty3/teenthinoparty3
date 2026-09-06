@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[اسم الحفلة]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@400;600;700;800;900&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================================
+   EVENT DATA — عدّل القيم هنا لاحقًا بالبيانات الحقيقية للحفلة
+   ============================================================ */
+:root{
+  --bg-0:#0B0A16;
+  --bg-1:#171331;
+  --bg-2:#221C42;
+  --gold:#CBA35C;
+  --gold-soft:#E7CE9C;
+  --rose:#E1568C;
+  --text-0:#F6F2E9;
+  --text-1:#BFB8D6;
+  --text-2:#8B84A8;
+  --line:rgba(203,163,92,0.22);
+  --radius:2px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg-0);
+  color:var(--text-0);
+  font-family:'Tajawal',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{
+  font-family:'Cairo',sans-serif;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:4px;}
+
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+
+/* subtle background texture — soft radial glows, no gradient cliché overload */
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(203,163,92,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 600px at 100% 30%, rgba(225,86,140,0.09), transparent 60%),
+    radial-gradient(ellipse 800px 700px at 0% 90%, rgba(203,163,92,0.06), transparent 60%);
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:100px 24px 60px;
+  overflow:hidden;
+}
+.hero-frame{
+  position:absolute;
+  inset:18px;
+  border:1px solid var(--line);
+  pointer-events:none;
+}
+.hero .eyebrow{
+  font-size:15px;
+  color:var(--gold-soft);
+  letter-spacing:0.02em;
+  opacity:0;
+  animation:rise 0.9s 0.15s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero h1{
+  font-family:'Lalezar',sans-serif;
+  font-size:clamp(52px,11vw,120px);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:0.01em;
+  margin:18px 0 22px;
+  background:linear-gradient(100deg,var(--gold-soft) 10%, var(--text-0) 45%, var(--gold) 80%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  opacity:0;
+  animation:rise 1s 0.35s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero .tagline{
+  font-size:clamp(17px,2.4vw,22px);
+  color:var(--text-1);
+  max-width:520px;
+  margin:0 auto 40px;
+  opacity:0;
+  animation:rise 0.9s 0.6s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero .meta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px 34px;
+  justify-content:center;
+  font-size:16px;
+  color:var(--text-0);
+  margin-bottom:44px;
+  opacity:0;
+  animation:rise 0.9s 0.8s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero .meta-row span{display:flex;align-items:center;gap:8px;}
+.hero .meta-row .dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.cta{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:16px 38px;
+  background:var(--gold);
+  color:var(--bg-0);
+  font-weight:700;
+  font-size:16px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:transform .35s cubic-bezier(.16,1,.3,1), background .3s, box-shadow .35s;
+  opacity:0;
+  animation:rise 0.9s 1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.cta::after{
+  content:'';
+  position:absolute;
+  top:0; bottom:0;
+  right:-60%;
+  width:45%;
+  background:linear-gradient(115deg, transparent, rgba(255,255,255,0.65), transparent);
+  transform:skewX(-20deg);
+  transition:right 0.85s cubic-bezier(.16,1,.3,1);
+}
+.cta:hover{background:var(--gold-soft);transform:translateY(-3px);box-shadow:0 10px 30px rgba(203,163,92,0.35);}
+.cta:hover::after{right:130%;}
+@keyframes rise{
+  from{opacity:0;transform:translateY(22px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero *{animation:none !important;opacity:1 !important;}
+}
+
+/* ============ SECTION SHELL ============ */
+section{position:relative;z-index:1;padding:110px 0;}
+.section-head{margin-bottom:56px;text-align:center;}
+.section-head h2{
+  font-size:clamp(30px,4.5vw,44px);
+  font-weight:800;
+  color:var(--text-0);
+}
+.section-head p{color:var(--text-2);margin-top:12px;font-size:16px;}
+.rule{
+  width:64px;height:1px;
+  background:var(--gold);
+  margin:20px auto 0;
+}
+
+/* ============ EVENT INFO ============ */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
+}
+.info-card{
+  padding:36px 24px;
+  text-align:center;
+  border-left:1px solid var(--line);
+}
+.info-card:first-child{border-left:none;}
+.info-card .ic{font-size:26px;margin-bottom:14px;}
+.info-card .label{font-size:13px;color:var(--text-2);margin-bottom:8px;}
+.info-card .value{font-size:18px;font-weight:700;color:var(--gold-soft);font-family:'Cairo',sans-serif;}
+@media (max-width:760px){
+  .info-grid{grid-template-columns:1fr 1fr;}
+  .info-card{border-left:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .info-card:nth-child(2n){border-left:none;}
+}
+
+/* ============ COUNTDOWN ============ */
+.countdown-wrap{
+  background:var(--bg-1);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.count-box{
+  min-width:110px;
+  text-align:center;
+  padding:26px 18px;
+  border:1px solid var(--line);
+  background:var(--bg-0);
+}
+.count-box .num{
+  font-family:'Cairo',sans-serif;
+  font-size:clamp(34px,6vw,52px);
+  font-weight:800;
+  color:var(--gold-soft);
+  font-variant-numeric:tabular-nums;
+}
+.count-box .lbl{font-size:13px;color:var(--text-2);margin-top:6px;}
+
+/* ============ TIMELINE ============ */
+.timeline{position:relative;padding-right:2px;}
+.timeline::before{
+  content:'';
+  position:absolute;
+  right:11px;top:6px;bottom:6px;
+  width:1px;
+  background:linear-gradient(var(--gold), transparent 95%);
+}
+@media (min-width:761px){
+  .timeline::before{right:50%;}
+}
+.t-item{
+  position:relative;
+  padding-right:44px;
+  margin-bottom:38px;
+}
+.t-item .dot{
+  position:absolute;right:5px;top:6px;
+  width:13px;height:13px;border-radius:50%;
+  background:var(--bg-0);
+  border:2px solid var(--gold);
+}
+.t-item .time{
+  font-family:'Cairo',sans-serif;
+  font-weight:700;
+  color:var(--gold-soft);
+  font-size:15px;
+  margin-bottom:6px;
+}
+.t-item .name{
+  font-size:19px;
+  font-weight:700;
+  color:var(--text-0);
+  margin-bottom:4px;
+}
+.t-item .desc{color:var(--text-1);font-size:15px;max-width:480px;}
+
+@media (min-width:761px){
+  .timeline{padding-right:0;}
+  .t-item{
+    width:50%;
+    padding-right:0;
+    margin-bottom:50px;
+  }
+  .t-item:nth-child(odd){
+    padding-left:0;
+    padding-right:48px;
+    text-align:right;
+    margin-right:50%;
+  }
+  .t-item:nth-child(even){
+    padding-right:0;
+    padding-left:48px;
+    text-align:left;
+    margin-left:50%;
+  }
+  .t-item:nth-child(odd) .dot{right:-7px;}
+  .t-item:nth-child(even) .dot{left:-7px;right:auto;}
+  .t-item:nth-child(even) .desc{margin-left:0;}
+}
+.t-item{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+.t-item.in-view{opacity:1;transform:translateY(0);}
+
+/* ============ LOCATION ============ */
+.location-card{
+  border:1px solid var(--line);
+  padding:44px;
+  text-align:center;
+}
+.location-card .venue{
+  font-family:'Cairo',sans-serif;
+  font-size:26px;
+  font-weight:800;
+  color:var(--gold-soft);
+  margin-bottom:10px;
+}
+.location-card .addr{color:var(--text-1);margin-bottom:26px;}
+.map-embed{
+  width:100%;
+  height:320px;
+  border:1px solid var(--line);
+  margin-bottom:26px;
+}
+.btn-outline{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:13px 30px;
+  border:1px solid var(--gold);
+  color:var(--gold-soft);
+  border-radius:var(--radius);
+  font-weight:700;
+  font-size:15px;
+  transition:background .3s, color .3s;
+}
+.btn-outline:hover{background:var(--gold);color:var(--bg-0);}
+
+/* ============ NOTES ============ */
+.notes-list{
+  max-width:640px;
+  margin:0 auto;
+  border-top:1px solid var(--line);
+}
+.notes-list li{
+  list-style:none;
+  padding:22px 4px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  gap:16px;
+  color:var(--text-1);
+  font-size:16px;
+}
+.notes-list li::before{
+  content:'—';
+  color:var(--gold);
+  flex-shrink:0;
+}
+
+/* ============ CALENDAR CTA ============ */
+.calendar-cta{
+  text-align:center;
+  background:var(--bg-1);
+  border:1px solid var(--line);
+  padding:56px 30px;
+}
+.calendar-cta h3{
+  font-size:24px;font-weight:800;margin-bottom:14px;
+}
+.calendar-cta p{color:var(--text-2);margin-bottom:28px;font-size:15px;}
+
+footer{
+  text-align:center;
+  padding:60px 24px 44px;
+  color:var(--text-2);
+  font-size:14px;
+}
+footer .event-line{
+  color:var(--text-1);
+  font-size:15px;
+  margin-bottom:22px;
+}
+.social-row{
+  display:flex;
+  justify-content:center;
+  margin-bottom:26px;
+}
+.btn-instagram{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 26px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--gold-soft);
+  font-weight:700;
+  font-size:14px;
+  transition:border-color .3s, transform .3s, background .3s;
+}
+.btn-instagram:hover{border-color:var(--gold);background:rgba(203,163,92,0.08);transform:translateY(-2px);}
+.btn-instagram svg{width:18px;height:18px;flex-shrink:0;}
+footer .copyright{
+  color:var(--text-2);
+  font-size:13px;
+  letter-spacing:0.01em;
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-frame"></div>
+  <div class="eyebrow" id="hero-tagline-top">أنتم مدعوون</div>
+  <h1 class="display" id="event-name">[اسم الحفلة]</h1>
+  <p class="tagline" id="event-tagline">[جملة قصيرة جذابة تصف روح الحفلة]</p>
+  <div class="meta-row">
+    <span id="hero-date">📅 [التاريخ]</span>
+    <span class="dot"></span>
+    <span id="hero-location">📍 [المكان]</span>
+    <span class="dot"></span>
+    <span id="hero-start">🕐 [وقت البداية]</span>
+  </div>
+  <a href="#schedule" class="cta">شاهد جدول الحفلة ↓</a>
+</section>
+
+<!-- ============ EVENT INFO ============ -->
+<section id="info">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>تفاصيل الحفلة</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="ic">📅</div>
+        <div class="label">التاريخ</div>
+        <div class="value" id="info-date">[التاريخ]</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">📍</div>
+        <div class="label">المكان</div>
+        <div class="value" id="info-location">[المكان]</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">🕐</div>
+        <div class="label">وقت البداية</div>
+        <div class="value" id="info-start">[وقت البداية]</div>
+      </div>
+      <div class="info-card">
+        <div class="ic">⏱️</div>
+        <div class="label">مدة الحفلة</div>
+        <div class="value" id="info-duration">[المدة]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COUNTDOWN ============ -->
+<section class="countdown-wrap">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>العد التنازلي</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="countdown" id="countdown">
+      <div class="count-box"><div class="num" id="cd-days">--</div><div class="lbl">يوم</div></div>
+      <div class="count-box"><div class="num" id="cd-hours">--</div><div class="lbl">ساعة</div></div>
+      <div class="count-box"><div class="num" id="cd-minutes">--</div><div class="lbl">دقيقة</div></div>
+      <div class="count-box"><div class="num" id="cd-seconds">--</div><div class="lbl">ثانية</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHEDULE / TIMELINE ============ -->
+<section id="schedule">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>برنامج الحفلة</h2>
+      <p>كل فعالية بترتيبها الزمني</p>
+      <div class="rule"></div>
+    </div>
+    <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- ============ LOCATION ============ -->
+<section id="location">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>المكان</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="location-card">
+      <div class="venue" id="loc-venue">[اسم المكان]</div>
+      <div class="addr" id="loc-address">[العنوان بالتفصيل]</div>
+      <iframe class="map-embed" id="map-embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0"
+        src="https://www.google.com/maps?q=Cairo&output=embed"></iframe>
+      <a href="#" id="maps-link" target="_blank" rel="noopener" class="btn-outline">فتح الموقع على Google Maps ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IMPORTANT NOTES ============ -->
+<section id="notes">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>معلومات مهمة للحضور</h2>
+      <div class="rule"></div>
+    </div>
+    <ul class="notes-list" id="notes-list">
+      <li>موعد فتح الأبواب: [الوقت]</li>
+      <li>موعد بداية الحفلة: [الوقت]</li>
+      <li>[تعليمات مهمة إضافية]</li>
+      <li>[أشياء يجب إحضارها]</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CALENDAR ============ -->
+<section id="calendar">
+  <div class="wrap">
+    <div class="calendar-cta">
+      <h3>خليك متذكر الموعد</h3>
+      <p>ضيف الحفلة على تقويمك دلوقتي</p>
+      <a href="#" id="gcal-link" target="_blank" rel="noopener" class="cta" style="opacity:1;animation:none;">Add to Google Calendar 📆</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="event-line" id="footer-name">[اسم الحفلة] · [التاريخ]</div>
+  <div class="social-row">
+    <a href="https://www.instagram.com/michaelihab22?igsi=NnJhaXJ4aGJjb3V3" target="_blank" rel="noopener" class="btn-instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="18" height="18" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.2" cy="6.8" r="1"/>
+      </svg>
+      تابعنا على Instagram
+    </a>
+  </div>
+  <div class="copyright">كل الحقوق محفوظة Teen Thino | Michael Ehab 2026</div>
+</footer>
+
+<script>
+/* ==========================================================================
+   EVENT_DATA — استبدل القيم دي بالبيانات الحقيقية للحفلة وهيتحدث الموقع كله
+   تنسيق التاريخ لازم يكون ISO: "YYYY-MM-DDTHH:MM:SS" (بتوقيت القاهرة تقريبًا)
+   ========================================================================== */
+const EVENT_DATA = {
+  name: "حَسَب و نَسَب",
+  tagline: "الكنيسة حسبي ونسبي",
+  dateDisplay: "السبت 12/9/2026",
+  locationDisplay: "مسرح كنيسة مارمينا شبرا",
+  startDisplay: "6 مساءاً",
+  durationDisplay: "4 ساعات",
+  // تاريخ ووقت البداية الفعلي — علشان يشتغل عليه الـ Countdown و Google Calendar
+  startISO: "2026-09-12T18:00:00",
+  endISO:   "2026-09-12T22:00:00",
+  venueName: "مسرح كنيسة مارمينا شبرا",
+  venueAddress: "[العنوان بالتفصيل]",
+  googleMapsUrl: "https://maps.app.goo.gl/P42c7adaHekADyM17",
+  googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1308.437155092518!2d31.246724065768003!3d30.065931365206076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458408eba484463%3A0xc528e8de0a4445c!2z2YPZhtmK2LPYqSDYp9mE2LTZh9mK2K8g2YXYp9ix2YXZitmG2Kcg2KfZhNi52KzYp9im2KjZiiDYtNio2LHYpw!5e0!3m2!1sar!2seg!4v1788369227812!5m2!1sar!2seg",
+  notes: [
+    "موعد فتح الأبواب: 5:45 مساءً",
+    "موعد بداية الحفل: 6:00 مساءً",
+    "الهدوء لعدم تخريب مجهود أبنائنا"
+  ],
+  schedule: [
+    { time:"6:00 PM", name:"استقبال الحضور وصلاة والسلام الوطني" },
+    { time:"6:30 PM", name:"بانتومايم" },
+    { time:"7:15 PM", name:"بانوراما" },
+    { time:"8:00 PM", name:"اعلان الفائز بالصيف" },
+    { time:"8:30 PM", name:"كلمة أبونا" },
+    { time:"9:00 PM", name:"أوبريت" }
+  ]
+};
+
+// ---- تعبئة النصوص ----
+document.getElementById('event-name').textContent = EVENT_DATA.name;
+document.title = EVENT_DATA.name;
+document.getElementById('event-tagline').textContent = EVENT_DATA.tagline;
+document.getElementById('hero-date').textContent = "📅 " + EVENT_DATA.dateDisplay;
+document.getElementById('hero-location').textContent = "📍 " + EVENT_DATA.locationDisplay;
+document.getElementById('hero-start').textContent = "🕐 " + EVENT_DATA.startDisplay;
+
+document.getElementById('info-date').textContent = EVENT_DATA.dateDisplay;
+document.getElementById('info-location').textContent = EVENT_DATA.locationDisplay;
+document.getElementById('info-start').textContent = EVENT_DATA.startDisplay;
+document.getElementById('info-duration').textContent = EVENT_DATA.durationDisplay;
+
+document.getElementById('loc-venue').textContent = EVENT_DATA.venueName;
+document.getElementById('loc-address').textContent = EVENT_DATA.venueAddress;
+document.getElementById('maps-link').href = EVENT_DATA.googleMapsUrl;
+document.getElementById('map-embed').src = EVENT_DATA.googleMapsEmbedUrl;
+
+document.getElementById('footer-name').textContent = EVENT_DATA.name + " · " + EVENT_DATA.dateDisplay;
+
+// ---- الملاحظات ----
+const notesList = document.getElementById('notes-list');
+notesList.innerHTML = '';
+EVENT_DATA.notes.forEach(n=>{
+  const li = document.createElement('li');
+  li.textContent = n;
+  notesList.appendChild(li);
+});
+
+// ---- الجدول الزمني ----
+const timeline = document.getElementById('timeline');
+EVENT_DATA.schedule.forEach(item=>{
+  const div = document.createElement('div');
+  div.className = 't-item';
+  div.innerHTML = `
+    <span class="dot"></span>
+    <div class="time">${item.time}</div>
+    <div class="name">${item.name}</div>
+  `;
+  timeline.appendChild(div);
+});
+
+// reveal timeline items on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+  });
+},{threshold:0.2});
+document.querySelectorAll('.t-item').forEach(el=>io.observe(el));
+
+// ---- Countdown ----
+function pad(n){ return String(n).padStart(2,'0'); }
+function updateCountdown(){
+  const target = new Date(EVENT_DATA.startISO).getTime();
+  const now = new Date().getTime();
+  const diff = target - now;
+  if(isNaN(target)){ return; }
+  if(diff <= 0){
+    document.getElementById('cd-days').textContent = '00';
+    document.getElementById('cd-hours').textContent = '00';
+    document.getElementById('cd-minutes').textContent = '00';
+    document.getElementById('cd-seconds').textContent = '00';
+    return;
+  }
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff%(1000*60))/1000);
+  document.getElementById('cd-days').textContent = pad(days);
+  document.getElementById('cd-hours').textContent = pad(hours);
+  document.getElementById('cd-minutes').textContent = pad(minutes);
+  document.getElementById('cd-seconds').textContent = pad(seconds);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// ---- Add to Google Calendar ----
+function toGCalDate(iso){
+  const d = new Date(iso);
+  return d.getUTCFullYear() +
+    pad(d.getUTCMonth()+1) +
+    pad(d.getUTCDate()) + 'T' +
+    pad(d.getUTCHours()) +
+    pad(d.getUTCMinutes()) +
+    pad(d.getUTCSeconds()) + 'Z';
+}
+const gcalStart = toGCalDate(EVENT_DATA.startISO);
+const gcalEnd = toGCalDate(EVENT_DATA.endISO);
+const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(EVENT_DATA.name)}&dates=${gcalStart}/${gcalEnd}&location=${encodeURIComponent(EVENT_DATA.venueAddress)}&details=${encodeURIComponent(EVENT_DATA.tagline)}`;
+document.getElementById('gcal-link').href = gcalUrl;
+</script>
+
+</body>
+</html>
