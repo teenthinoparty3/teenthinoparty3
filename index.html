@@ -8,9 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Cairo:wght@400;600;700;800;900&family=Lalezar&display=swap" rel="stylesheet">
 <style>
-
 /* ============================================================
-   EVENT DATA — عدّل القيم هنا لاحقًا بالبيانات الحقيقية للحفلة
+   ألوان ومتغيرات عامة — عدّل الألوان من هنا لو حبيت تغيّر الهوية
    ============================================================ */
 :root{
   --bg-0:#0B0A16;
@@ -346,6 +345,7 @@ section{position:relative;z-index:1;padding:110px 0;}
 }
 .calendar-cta p{color:var(--text-2);margin-bottom:28px;font-size:15px;}
 
+/* ============ FOOTER ============ */
 footer{
   text-align:center;
   padding:60px 24px 44px;
@@ -492,7 +492,6 @@ footer .copyright{
       <li>موعد فتح الأبواب: [الوقت]</li>
       <li>موعد بداية الحفلة: [الوقت]</li>
       <li>[تعليمات مهمة إضافية]</li>
-      <li>[أشياء يجب إحضارها]</li>
     </ul>
   </div>
 </section>
@@ -553,7 +552,8 @@ const EVENT_DATA = {
     { time:"7:15 PM", name:"بانوراما" },
     { time:"8:00 PM", name:"اعلان الفائز بالصيف" },
     { time:"8:30 PM", name:"كلمة أبونا" },
-    { time:"9:00 PM", name:"أوبريت" }
+    { time:"9:00 PM", name:"أوبريت" },
+    { time:"9:30 PM", name:"حفلة التخرج وتسليم الشهادات" }
   ]
 };
 
@@ -647,7 +647,7 @@ const gcalStart = toGCalDate(EVENT_DATA.startISO);
 const gcalEnd = toGCalDate(EVENT_DATA.endISO);
 const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(EVENT_DATA.name)}&dates=${gcalStart}/${gcalEnd}&location=${encodeURIComponent(EVENT_DATA.venueAddress)}&details=${encodeURIComponent(EVENT_DATA.tagline)}`;
 document.getElementById('gcal-link').href = gcalUrl;
-</script>
 
+</script>
 </body>
 </html>
